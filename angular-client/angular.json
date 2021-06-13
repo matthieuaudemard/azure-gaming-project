@@ -65,7 +65,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-client:build"
+            "browserTarget": "angular-client:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -91,6 +92,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/dist/css/bootstrap.css",
               "src/styles.scss"
             ],
             "scripts": []
