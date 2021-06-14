@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-cors = "*"
+pymongo = "*"
+pyyaml = "*"
 
 [dev-packages]
 
