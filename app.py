@@ -17,13 +17,12 @@ def get_():
     all_data = db['games'].find()
     data_json = []
     for data in all_data:
-        data_dict = {
+        data_json.append({
             '_id': str(data['_id']),
             'name': data['name'],
             'cover': data['cover'],
             'review': str(data['review']) if 'review' in data else '0'
-        }
-        data_json.append(data_dict)
+        })
     print(data_json)
     return jsonify(data_json)
 
