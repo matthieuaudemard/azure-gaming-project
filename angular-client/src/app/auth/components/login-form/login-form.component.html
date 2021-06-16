@@ -4,14 +4,14 @@
         <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image">
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-        <form>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-outline mb-4">
-            <input type="email" id="login" class="form-control form-control-lg" />
-            <label class="form-label" for="login">Login</label>
+            <input type="text" id="username" name="username" formControlName="username" class="form-control form-control-lg" />
+            <label class="form-label" for="username">Login</label>
           </div>
 
           <div class="form-outline mb-4">
-            <input type="password" id="password" class="form-control form-control-lg" />
+            <input type="password" id="password" name="password" formControlName="password" class="form-control form-control-lg" />
             <label class="form-label" for="password">Password</label>
           </div>
 

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from "../../services/auth.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-form',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
   }
 
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this.authService
+        .login(this.form.value.username, this.form.value.password)
+        .then(() => this.router.navigate(['']));
+    }
+  }
 }
