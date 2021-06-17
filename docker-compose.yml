@@ -1,0 +1,41 @@
+version: '3'
+services:
+
+  client:
+    build: angular-client
+    image: "azure-client:latest"
+    container_name: azure-client
+    ports:
+      - "4200:80"
+    networks:
+      - frontend
+
+  server:
+    image: "azure-back:latest"
+    build: .
+    container_name: azure-back
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    networks:
+      - frontend
+      - backend
+    links:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27018:27018"
+    command: mongod --port 27018 # permet de modifier le port de mongo
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
