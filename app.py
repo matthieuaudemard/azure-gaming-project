@@ -19,7 +19,7 @@ jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] = "this-is-secret-key"  # change it
 
 
-@app.route("/api/login", methods=["POST"])
+@app.route("/api/auth/login", methods=["POST"])
 def login():
     if request.is_json:
         username = request.json["username"]

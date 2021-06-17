@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GameService} from "../../services/game.service";
 import {Game} from "../../models/game";
+import {AuthService} from "../../../auth/services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-game-list',
@@ -19,5 +21,4 @@ export class GameListComponent implements OnInit {
       games => this.games = games
     );
   }
-
 }
