@@ -1,1 +1,1 @@
-uri: 'mongodb://localhost:27017/azure'
+uri: 'mongodb://mongo:27018/azure'
