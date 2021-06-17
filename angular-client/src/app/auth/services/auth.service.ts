@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {BehaviorSubject} from "rxjs";
+import {User} from "../../shared/models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,9 @@ import {Router} from "@angular/router";
 export class AuthService {
 
   private static readonly ROOT_URL = 'http://localhost:5000/api/auth';
+
+  private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>({});
+  public loggedUser = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -23,12 +27,13 @@ export class AuthService {
     return parsedPayload.exp > Date.now() / 1000;
   }
 
-  login(username: string, password: string): Promise<void> {
+  login(username: string, password: string): Promise<User> {
     return new Promise(resolve => {
       this.http.post<any>(`${AuthService.ROOT_URL}/login`, {username, password}).subscribe(res => {
         if (res.access_token) {
           localStorage.setItem('access_token', res.access_token);
-          return resolve();
+          this.userSubject.next(res.user);
+          return resolve(res.user);
         }
       })
     })
@@ -41,9 +46,8 @@ export class AuthService {
   logout(): Promise<void> {
     return new Promise(resolve => {
       localStorage.removeItem('access_token');
-      if (!localStorage.getItem('access_token')) {
-        return resolve();
-      }
+      this.userSubject.next({});
+      return resolve();
     });
   }
 }

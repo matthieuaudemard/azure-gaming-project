@@ -32,7 +32,11 @@ def login():
 
     if user_from_db:
         access_token = create_access_token(identity=username)
-        return jsonify(message="Login Succeeded!", access_token=access_token), 201
+        user_json = {
+            '_id': str(user_from_db.get('_id')),
+            'username': user_from_db.get('username')
+        }
+        return jsonify(message="Login Succeeded!", access_token=access_token, user=user_json), 201
     return jsonify(message="Bad credential"), 401
 
 
