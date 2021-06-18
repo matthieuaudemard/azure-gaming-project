@@ -7,7 +7,7 @@ import yaml
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-config = yaml.full_load(open('database.yaml'))
+config = yaml.full_load(open('database.yml'))
 client = MongoClient(config['uri'])
 db = client['azure']
 # collections

@@ -5,14 +5,19 @@ import {AuthRoutingModule} from "./auth-routing.module";
 import {AuthService} from "./services/auth.service";
 import {AuthGuard} from "./guard/auth.guard";
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LoginFormComponent
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthGuard

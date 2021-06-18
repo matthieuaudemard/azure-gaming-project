@@ -10,9 +10,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    GameListComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     HttpClientModule,
