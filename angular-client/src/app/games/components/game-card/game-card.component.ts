@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Game} from "../../models/game";
+import {Game} from '../../models/game';
 
 @Component({
   selector: 'app-game-card',
@@ -9,7 +9,7 @@ import {Game} from "../../models/game";
 export class GameCardComponent implements OnInit {
 
   @Input()
-  game: Game
+  game: Game;
 
   constructor() { }
 
