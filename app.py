@@ -49,7 +49,7 @@ def get_all_games():
             '_id': str(data['_id']),
             'name': data['name'],
             'cover': data['cover'],
-            'review': str(data['review']) if 'review' in data else '0'
+            'review': int(data['review']) if 'review' in data else 0
         })
     return jsonify(data_json)
 

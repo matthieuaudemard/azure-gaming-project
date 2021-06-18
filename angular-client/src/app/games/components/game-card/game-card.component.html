@@ -1,0 +1,20 @@
+<div class="card h-100">
+  <!-- Game image-->
+  <img class="card-img-top" [src]="game.cover" [alt]="game.name"/>
+  <!-- Game details-->
+  <div class="card-body p-4">
+    <div class="text-center">
+      <!-- Game name-->
+      <h5 class="fw-bolder">{{game.name}}</h5>
+      <!-- Game reviews-->
+      <div *ngIf="game.review" class="d-flex justify-content-center small text-warning mb-0">
+        <div *ngFor="let item of [].constructor(game.review)" class="bi-star-fill"></div>
+        <i class="bi-star-fill"></i>
+      </div>
+    </div>
+  </div>
+  <!-- Game actions-->
+  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Play</a></div>
+  </div>
+</div>
