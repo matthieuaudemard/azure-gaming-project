@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Game} from '../../models/game';
+import {AuthService} from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-game-card',
@@ -10,11 +11,14 @@ export class GameCardComponent implements OnInit {
 
   @Input()
   game: Game;
+  canPlay = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    console.log(this.game);
+    this.authService.loggedUser.subscribe(
+      user => this.canPlay = user.gameIds.includes(this.game._id)
+    );
   }
 
 }
