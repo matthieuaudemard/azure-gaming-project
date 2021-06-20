@@ -34,7 +34,8 @@ def login():
         access_token = create_access_token(identity=username)
         user_json = {
             '_id': str(user_from_db.get('_id')),
-            'username': user_from_db.get('username')
+            'username': user_from_db.get('username'),
+            'gameIds': user_from_db.get('gameIds')
         }
         return jsonify(message="Login Succeeded!", access_token=access_token, user=user_json), 201
     return jsonify(message="Bad credential"), 401
@@ -61,7 +62,8 @@ def get_current_user():
     if current_user:
         return jsonify({
             '_id': str(current_user.get('_id')),
-            'username': current_user.get('username')
+            'username': current_user.get('username'),
+            'gameIds': current_user.get('gameIds')
         }), 200
     return jsonify(message="Bad credential"), 404
 
