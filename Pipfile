@@ -9,6 +9,8 @@ flask-cors = "*"
 pymongo = "*"
 pyyaml = "*"
 flask-jwt-extended = "*"
+msrestazure = "*"
+azure-mgmt-compute = "==21.0.0"
 
 [dev-packages]
 

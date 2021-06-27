@@ -16,4 +16,8 @@ export class GameService {
   getAll(): Observable<Game[]> {
     return this.http.get<Game[]>(GameService.ROOT_URL);
   }
+
+  play(): Observable<void> {
+    return this.http.get<void>(`${GameService.ROOT_URL}/play`);
+  }
 }

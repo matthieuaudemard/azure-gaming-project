@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Game} from '../../models/game';
 import {AuthService} from '../../../auth/services/auth.service';
+import {GameService} from '../../services/game.service';
 
 @Component({
   selector: 'app-game-card',
@@ -13,7 +14,8 @@ export class GameCardComponent implements OnInit {
   game: Game;
   canPlay = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private gameService: GameService) {
+  }
 
   ngOnInit(): void {
     this.authService.loggedUser.subscribe(
@@ -21,4 +23,10 @@ export class GameCardComponent implements OnInit {
     );
   }
 
+  playGame(): void {
+    this.gameService.play().subscribe(
+      () => console.log('play'),
+      error => console.error(error)
+    );
+  }
 }
