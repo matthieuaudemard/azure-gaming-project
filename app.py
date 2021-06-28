@@ -2,7 +2,7 @@ from azure.mgmt.compute import ComputeManagementClient
 from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from flask_cors import CORS
-from msrestazure.azure_active_directory import ServicePrincipalCredentials
+from azure.identity import ClientSecretCredential
 from pymongo import MongoClient
 import yaml
 
@@ -63,7 +63,11 @@ def get_all_games():
 
 @app.route("/api/games/play")
 def play_game():
-    start_vm()
+    try:
+        start_vm()
+        return jsonify({'message': 'vm started'}), 200
+    except Exception:
+        return jsonify({'message': 'something went wrong'}), 400
 
 
 @app.route("/api/users/current", methods=["GET"])
@@ -81,10 +85,10 @@ def get_current_user():
 
 def get_credentials():
     subscription_id = '848cb7db-a25d-4e28-abbf-50853f6b0437'
-    credentials = ServicePrincipalCredentials(
+    credentials = ClientSecretCredential(
         client_id='d4ab77c9-3187-40d9-b0ec-cd840925c0d8',
-        secret='XXff8m-H5i3_78J2h.4FnsS26q.n21HK95',
-        tenant='b7b023b8-7c32-4c02-92a6-c8cdaa1d189c'
+        client_secret='XXff8m-H5i3_78J2h.4FnsS26q.n21HK95',
+        tenant_id='b7b023b8-7c32-4c02-92a6-c8cdaa1d189c'
     )
     return credentials, subscription_id
 
@@ -94,8 +98,7 @@ def start_vm():
     print('\nStart VM')
     credentials, subscription_id = get_credentials()
     compute_client = ComputeManagementClient(credentials, subscription_id)
-    async_vm_start = compute_client.virtual_machines.start(
-        GROUP_NAME, VM_NAME)
+    async_vm_start = compute_client.virtual_machines.begin_start(GROUP_NAME, VM_NAME)
     async_vm_start.wait()
 
 
