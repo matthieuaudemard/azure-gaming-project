@@ -9,8 +9,11 @@ import yaml
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-config = yaml.full_load(open('database.yml'))
-client = MongoClient(config['uri'])
+try:
+    config = yaml.full_load(open('database.yml'))
+    client = MongoClient(config['uri'])
+except:
+    client = MongoClient('mongodb://localhost:27018/azure')
 db = client['azure']
 # collections
 users = db["users"]
@@ -21,7 +24,7 @@ jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] = "this-is-secret-key"  # change it
 
 # Resource Group
-GROUP_NAME = 'Parsec_group'
+GROUP_NAME = 'cloudgaming_group'
 VM_NAME = 'cloudgaming'
 
 
@@ -68,6 +71,23 @@ def play_game():
         return jsonify({'message': 'vm started'}), 200
     except Exception:
         return jsonify({'message': 'something went wrong'}), 400
+
+
+def stop_vm():
+    credentials, subscription_id = get_credentials()
+    compute_client = ComputeManagementClient(credentials, subscription_id)
+    async_vm_start = compute_client.virtual_machines.begin_power_off(GROUP_NAME, VM_NAME)
+    async_vm_start.wait()
+
+
+@app.route("/api/games/stop")
+def stop_game():
+    try:
+        stop_vm()
+        return jsonify({'message': 'vm stopped'}), 200
+    except Exception:
+        return jsonify({'message': 'something went wrong'}), 400
+
 
 
 @app.route("/api/users/current", methods=["GET"])

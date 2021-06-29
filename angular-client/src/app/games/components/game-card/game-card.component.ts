@@ -19,13 +19,19 @@ export class GameCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.loggedUser.subscribe(
-      user => this.canPlay = user.gameIds.includes(this.game._id)
+      user => this.canPlay = user.gameIds?.includes(this.game._id)
     );
   }
 
   playGame(): void {
-    this.gameService.play().subscribe(
-      () => console.log('play'),
+    this.gameService.launch().subscribe(
+      () => {
+        console.log('vm started');
+        setTimeout(() => this.gameService.stop().subscribe(
+          () => console.log('vm stopped'),
+          error => console.log(error)
+        ), 1000);
+      },
       error => console.error(error)
     );
   }
