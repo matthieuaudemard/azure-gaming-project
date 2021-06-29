@@ -12,6 +12,7 @@ import {RippleModule} from 'primeng/ripple';
 import {MessageModule} from 'primeng/message';
 import {MessageService} from 'primeng/api';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     RippleModule,
     ToastModule,
     MessageModule,
+    ProgressBarModule
   ],
   providers: [AuthService, MessageService],
   bootstrap: [AppComponent]

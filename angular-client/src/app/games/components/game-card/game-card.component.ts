@@ -24,24 +24,34 @@ export class GameCardComponent implements OnInit {
     );
   }
 
-  showConfirm(): void {
+  showToastStopVm(): void {
     this.messageService.clear();
     this.messageService.add({
       key: 'c',
-      severity: 'info',
+      severity: 'warn',
       sticky: true,
       summary: `La VM est en cours d'execution`,
-      detail: `Voulez-vous arreter la VM ?`,
+      detail: `Voulez-vous arrêter la VM ?`,
     });
   }
 
   playGame(): void {
+    this.showToastVmStarting();
     this.gameService.launch().subscribe(
       () => {
-        console.log('vm started');
-        this.showConfirm();
+        this.showToastStopVm();
       },
       error => console.error(error)
     );
+  }
+
+  private showToastVmStarting(): void {
+    this.messageService.clear();
+    this.messageService.add({
+      sticky: true,
+      summary: 'La VM est en cours de démarrage',
+      key: 'center',
+      severity: 'info'
+    });
   }
 }

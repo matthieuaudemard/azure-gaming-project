@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~11.2.14",
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
+    "bootstrap": "^5.0.2",
     "cdk": "^1.110.1",
     "primeicons": "^4.1.0",
     "primeng": "^11.4.3",
