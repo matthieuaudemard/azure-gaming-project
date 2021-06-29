@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Game} from '../../models/game';
 import {AuthService} from '../../../auth/services/auth.service';
 import {GameService} from '../../services/game.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-game-card',
@@ -14,7 +15,7 @@ export class GameCardComponent implements OnInit {
   game: Game;
   canPlay = false;
 
-  constructor(private authService: AuthService, private gameService: GameService) {
+  constructor(private authService: AuthService, private gameService: GameService, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -23,16 +24,34 @@ export class GameCardComponent implements OnInit {
     );
   }
 
+  showToastStopVm(): void {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'c',
+      severity: 'warn',
+      sticky: true,
+      summary: `La VM est en cours d'execution`,
+      detail: `Voulez-vous arrêter la VM ?`,
+    });
+  }
+
   playGame(): void {
+    this.showToastVmStarting();
     this.gameService.launch().subscribe(
       () => {
-        console.log('vm started');
-        setTimeout(() => this.gameService.stop().subscribe(
-          () => console.log('vm stopped'),
-          error => console.log(error)
-        ), 1000);
+        this.showToastStopVm();
       },
       error => console.error(error)
     );
+  }
+
+  private showToastVmStarting(): void {
+    this.messageService.clear();
+    this.messageService.add({
+      sticky: true,
+      summary: 'La VM est en cours de démarrage',
+      key: 'center',
+      severity: 'info'
+    });
   }
 }
