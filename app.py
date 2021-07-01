@@ -120,12 +120,12 @@ def get_credentials():
 
 
 def start_vm():
-    # Start the VM
-    print('\nStart VM')
     credentials, subscription_id = get_credentials()
     compute_client = ComputeManagementClient(credentials, subscription_id)
-    async_vm_start = compute_client.virtual_machines.begin_start(GROUP_NAME, VM_NAME)
-    async_vm_start.wait()
+    # si la VM n'est pas allumée, on la lance
+    if any(status.code == 'PowerState/running' for status in compute_client.virtual_machines.get(GROUP_NAME, VM_NAME, expand='instanceView').instance_view.statuses):
+        async_vm_start = compute_client.virtual_machines.begin_start(GROUP_NAME, VM_NAME)
+        async_vm_start.wait()
 
 
 if __name__ == "__main__":
