@@ -3,6 +3,7 @@ import {Game} from '../../models/game';
 import {AuthService} from '../../../auth/services/auth.service';
 import {GameService} from '../../services/game.service';
 import {MessageService} from 'primeng/api';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-game-card',
@@ -40,6 +41,7 @@ export class GameCardComponent implements OnInit {
     this.gameService.launch().subscribe(
       () => {
         this.showToastStopVm();
+        window.open(environment.gameUri);
       },
       error => console.error(error)
     );
