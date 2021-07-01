@@ -11,6 +11,8 @@ TENANT_ID = os.environ['TENANT_ID'] if 'TENANT_ID' in os.environ else 'b7b023b8-
 CLIENT_SECRET = os.environ['CLIENT_SECRET'] if 'CLIENT_SECRET' in os.environ else 'XXff8m-H5i3_78J2h.4FnsS26q.n21HK95'
 CLIENT_ID = os.environ['CLIENT_ID'] if 'CLIENT_ID' in os.environ else 'd4ab77c9-3187-40d9-b0ec-cd840925c0d8'
 SUBSCRIPTION_ID = os.environ['SUBSCRIPTION_ID'] if 'SUBSCRIPTION_ID' in os.environ else '848cb7db-a25d-4e28-abbf-50853f6b0437'
+GROUP_NAME = os.environ['GROUP_NAME'] if 'GROUP_NAME' in os.environ else 'cloudgaming_group'
+VM_NAME = os.environ['VM_NAME'] if 'VM_NAME' in os.environ else 'cloudgaming'
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -32,8 +34,7 @@ jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] = "this-is-secret-key"  # change it
 
 # Resource Group
-GROUP_NAME = 'cloudgaming_group'
-VM_NAME = 'cloudgaming'
+
 
 
 @app.route("/api/auth/login", methods=["POST"])
