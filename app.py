@@ -5,6 +5,12 @@ from flask_cors import CORS
 from azure.identity import ClientSecretCredential
 from pymongo import MongoClient
 import yaml
+import os
+
+TENANT_ID = os.environ['TENANT_ID'] if 'TENANT_ID' in os.environ else 'b7b023b8-7c32-4c02-92a6-c8cdaa1d189c'
+CLIENT_SECRET = os.environ['CLIENT_SECRET'] if 'CLIENT_SECRET' in os.environ else 'XXff8m-H5i3_78J2h.4FnsS26q.n21HK95'
+CLIENT_ID = os.environ['CLIENT_ID'] if 'CLIENT_ID' in os.environ else 'd4ab77c9-3187-40d9-b0ec-cd840925c0d8'
+SUBSCRIPTION_ID = os.environ['SUBSCRIPTION_ID'] if 'SUBSCRIPTION_ID' in os.environ else '848cb7db-a25d-4e28-abbf-50853f6b0437'
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -19,6 +25,8 @@ db = client['azure']
 users = db["users"]
 games = db['games']
 jwt = JWTManager(app)
+
+
 
 # JWT Config
 app.config["JWT_SECRET_KEY"] = "this-is-secret-key"  # change it
@@ -89,7 +97,6 @@ def stop_game():
         return jsonify({'message': 'something went wrong'}), 400
 
 
-
 @app.route("/api/users/current", methods=["GET"])
 @jwt_required()
 def get_current_user():
@@ -104,13 +111,12 @@ def get_current_user():
 
 
 def get_credentials():
-    subscription_id = '848cb7db-a25d-4e28-abbf-50853f6b0437'
     credentials = ClientSecretCredential(
-        client_id='d4ab77c9-3187-40d9-b0ec-cd840925c0d8',
-        client_secret='XXff8m-H5i3_78J2h.4FnsS26q.n21HK95',
-        tenant_id='b7b023b8-7c32-4c02-92a6-c8cdaa1d189c'
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        tenant_id=TENANT_ID
     )
-    return credentials, subscription_id
+    return credentials, SUBSCRIPTION_ID
 
 
 def start_vm():
