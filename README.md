@@ -27,6 +27,7 @@ ouvrez votre navigateur préféré à l'adress http://localhost:4200
    
 ## Choix techniques
 
+### Architecture
 L'application a été conçue à l'aide d'une base de données [mongoDB](https://www.mongodb.com/fr-fr) dans laquelle sont stockées les utilisateurs 
 et les jeux présentés sur la page de liste des jeux. Le script `mongo/mongo-init.js` permet l'ajout automatique de données dans la base. 
 
@@ -37,6 +38,18 @@ Le portail a quant à lui été développé à l'aide du framework [Angular](htt
 ### Authentification
 
 Le système d'authentification a été réalisée à l'aide d'un token [JWT](https://jwt.io/) stocké par le navigateur. Un intercepteur HTTP a été mis
-en place afin d'injecter ce token à chaque requête effectuée en direction de l'API depuis l'application Angular. A cet intercepteur, un Guard a été
-couplé afin d'empécher l'accès au listing des jeux aux utilisateurs non identifiés en les redirigeant vers la page de login
+en place afin d'injecter ce token à chaque requête effectuée en direction de l'API depuis l'application Angular. En plus de cet intercepteur, 
+un Guard lui a été couplé afin d'empêcher l'accès au listing des jeux aux utilisateurs non identifiés en les redirigeant vers la page de login.
+
+### Azure SDK
+
+Le [SDK Microsoft azure pour python](https://docs.microsoft.com/fr-fr/azure/developer/python/azure-sdk-overview) m'a permis d'interagir avec une instance Azure.
+
+### Build / Run
+
+Afin de faciliter le dépoiement et de limiter l'installation de dépendances (node, python, angular ...) sur l'environnement d'exécution, 
+j'ai fait le choix d'utiliser docker. Ainsi, au lancement du projet 3 conteneurs seront lancés :
+ - azure-client pour le front
+ - azure-back pour l'api
+ - azure-gaming-project-mongo pour la base de données
 
