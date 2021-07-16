@@ -18,8 +18,8 @@ ouvrez votre navigateur préféré à l'adress http://localhost:4200
 
  - Veillez à autoriser les pop-ups pour le lancement du jeu, sans quoi la fenêtre n'apparaîtra pas.
  - Il existe 2 comptes utilisateurs :
-   * login: `joueur1` / password: `joueur1` qui dispose des droits pour l'éxecution d'un jeu
-   * login: `joueur2` / password: `joueur2` qui ne peut lancer aucun jeu
+   * login: `player1` / password: `player1` qui dispose des droits pour l'éxecution d'un jeu
+   * login: `player2` / password: `player2` qui ne peut lancer aucun jeu
  - Vous avez la possibilité de configurer la VM à utiliser. Pour cela, éditez le fichier `var.env` en renseignant les variables correspondantes.
    Vous devez également éditer le fichier `angular-client/src/environments/environment.prod.ts` en modifiant la valeur de la variable `gameUri`
    pour lui fournir l'adresse du jeu sur la VM. Il faudra alors executer la commande suivante afin de lancer l'application :
