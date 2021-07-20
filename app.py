@@ -76,8 +76,10 @@ def get_all_games():
 @app.route("/api/games/play")
 def play_game():
     try:
-        start_vm()
-        return jsonify({'message': 'vm started'}), 200
+        if start_vm():
+            return jsonify({'message': 'vm started'}), 200
+        else:
+            return jsonify({'message': 'something went wrong'}), 400
     except Exception:
         return jsonify({'message': 'something went wrong'}), 400
 
@@ -127,6 +129,8 @@ def start_vm():
     if any(status.code == 'PowerState/running' for status in compute_client.virtual_machines.get(GROUP_NAME, VM_NAME, expand='instanceView').instance_view.statuses):
         async_vm_start = compute_client.virtual_machines.begin_start(GROUP_NAME, VM_NAME)
         async_vm_start.wait()
+        return True
+    return False
 
 
 if __name__ == "__main__":

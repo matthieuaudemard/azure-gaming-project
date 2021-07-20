@@ -43,7 +43,10 @@ export class GameCardComponent implements OnInit {
         this.showToastStopVm();
         window.open(environment.gameUri);
       },
-      error => console.error(error)
+      error => {
+        console.error(error);
+        this.showToastErrorVm();
+      }
     );
   }
 
@@ -54,6 +57,16 @@ export class GameCardComponent implements OnInit {
       summary: 'La VM est en cours de démarrage',
       key: 'center',
       severity: 'info'
+    });
+  }
+
+  private showToastErrorVm(): void {
+    this.messageService.clear();
+    this.messageService.add({
+      sticky: true,
+      summary: `Une erreur s'est produite lors du démarrage de la VM`,
+      key: 'tr',
+      severity: 'error'
     });
   }
 }

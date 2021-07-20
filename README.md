@@ -10,9 +10,9 @@ Le but de ce projet est de fournir un portail web qui permet de lancer un jeu d�
 ## Lancement du projet
 
 ```shell
-sudo docker-compose up -d --build
+sudo docker-compose --env-file var.env up -d --build
 ```
-ouvrez votre navigateur préféré à l'adress http://localhost:4200
+ouvrez votre navigateur préféré à l'adresse http://localhost:4200
 
 ## Nota Bene
 
@@ -23,7 +23,7 @@ ouvrez votre navigateur préféré à l'adress http://localhost:4200
  - Vous avez la possibilité de configurer la VM à utiliser. Pour cela, éditez le fichier `var.env` en renseignant les variables correspondantes.
    Vous devez également éditer le fichier `angular-client/src/environments/environment.prod.ts` en modifiant la valeur de la variable `gameUri`
    pour lui fournir l'adresse du jeu sur la VM. Il faudra alors executer la commande suivante afin de lancer l'application :
-   `docker-compose --env-file var.env up -d --build`
+   `sudo docker-compose --env-file var.env up -d --build`
    
 ## Choix techniques
 
