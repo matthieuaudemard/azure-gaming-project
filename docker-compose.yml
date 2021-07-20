@@ -23,6 +23,13 @@ services:
       - backend
     links:
       - mongo
+    environment:
+      - SUBSCRIPTION_ID=$SUBSCRIPTION_ID
+      - TENANT_ID=$TENANT_ID
+      - CLIENT_SECRET=$CLIENT_SECRET
+      - CLIENT_ID=$CLIENT_ID
+      - GROUP_NAME=$GROUP_NAME
+      - VM_NAME=$VM_NAME
 
   mongo:
     image: mongo:latest
