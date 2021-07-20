@@ -10,7 +10,8 @@ import os
 TENANT_ID = os.environ['TENANT_ID'] if 'TENANT_ID' in os.environ else 'b7b023b8-7c32-4c02-92a6-c8cdaa1d189c'
 CLIENT_SECRET = os.environ['CLIENT_SECRET'] if 'CLIENT_SECRET' in os.environ else 'XXff8m-H5i3_78J2h.4FnsS26q.n21HK95'
 CLIENT_ID = os.environ['CLIENT_ID'] if 'CLIENT_ID' in os.environ else 'd4ab77c9-3187-40d9-b0ec-cd840925c0d8'
-SUBSCRIPTION_ID = os.environ['SUBSCRIPTION_ID'] if 'SUBSCRIPTION_ID' in os.environ else '848cb7db-a25d-4e28-abbf-50853f6b0437'
+SUBSCRIPTION_ID = os.environ[
+    'SUBSCRIPTION_ID'] if 'SUBSCRIPTION_ID' in os.environ else '848cb7db-a25d-4e28-abbf-50853f6b0437'
 GROUP_NAME = os.environ['GROUP_NAME'] if 'GROUP_NAME' in os.environ else 'cloudgaming_group'
 VM_NAME = os.environ['VM_NAME'] if 'VM_NAME' in os.environ else 'cloudgaming'
 
@@ -28,13 +29,11 @@ users = db["users"]
 games = db['games']
 jwt = JWTManager(app)
 
-
-
 # JWT Config
 app.config["JWT_SECRET_KEY"] = "this-is-secret-key"  # change it
 
-# Resource Group
 
+# Resource Group
 
 
 @app.route("/api/auth/login", methods=["POST"])
@@ -126,7 +125,8 @@ def start_vm():
     credentials, subscription_id = get_credentials()
     compute_client = ComputeManagementClient(credentials, subscription_id)
     # si la VM n'est pas allumée, on la lance
-    if any(status.code == 'PowerState/running' for status in compute_client.virtual_machines.get(GROUP_NAME, VM_NAME, expand='instanceView').instance_view.statuses):
+    if any(status.code == 'PowerState/running' for status in
+           compute_client.virtual_machines.get(GROUP_NAME, VM_NAME, expand='instanceView').instance_view.statuses):
         async_vm_start = compute_client.virtual_machines.begin_start(GROUP_NAME, VM_NAME)
         async_vm_start.wait()
         return True

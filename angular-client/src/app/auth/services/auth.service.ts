@@ -28,14 +28,17 @@ export class AuthService {
   }
 
   login(username: string, password: string): Promise<User> {
-    return new Promise(resolve => {
-      this.http.post<any>(`${AuthService.ROOT_URL}/login`, {username, password}).subscribe(res => {
-        if (res.access_token) {
-          localStorage.setItem('access_token', res.access_token);
-          this.userSubject.next(res.user);
-          return resolve(res.user);
-        }
-      });
+    return new Promise((resolve, reject) => {
+      this.http.post<any>(`${AuthService.ROOT_URL}/login`, {username, password}).subscribe(
+        res => {
+          if (res.access_token) {
+            localStorage.setItem('access_token', res.access_token);
+            this.userSubject.next(res.user);
+            return resolve(res.user);
+          }
+        },
+        () => reject(new Error('Utilisateur introuvable ou mot de passe incorrect'))
+      );
     });
   }
 
