@@ -11,6 +11,8 @@ import {Router} from '@angular/router';
 export class LoginFormComponent implements OnInit {
 
   form: FormGroup;
+  showError = false;
+  errorMessage: string;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) {
   }
@@ -26,7 +28,11 @@ export class LoginFormComponent implements OnInit {
     if (this.form.valid) {
       this.authService
         .login(this.form.value.username, this.form.value.password)
-        .then(() => this.router.navigate(['']));
+        .then(() => this.router.navigate(['']))
+        .catch((error) => {
+          this.errorMessage = error;
+          this.showError = true;
+        });
     }
   }
 }
